@@ -12,8 +12,15 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
+import AddProduct from "./pages/supplier/AddProduct";
+import UpdateProduct from "./pages/supplier/UpdateProduct";
 import Products from "./pages/supplier/Products";
 import Orders from "./pages/supplier/Orders";
+
+import Jobs from "./pages/worker/Jobs";
+import Applications from "./pages/worker/Applications";
+
+import UpdateUser from "./pages/UpdateUser";
 
 import ErrorPage from "./pages/error-page";
 
@@ -30,6 +37,53 @@ function RequireAuth({ children }) {
   return children;
 }
 
+// children routes based on user role
+var children = [];
+children.push({
+  path: "/", // yes, again
+  element: <Home />
+}, {
+  path: "/about",
+  element: <About />
+}, {
+  path: "contact/:contactId",
+  element: <Contact />
+}, {
+  path: "/settings",
+  element: <UpdateUser />
+});
+
+// if user is supplier
+if (localStorage.getItem("userType") === "supplier") {
+  children.push({
+    path: "/products/add",
+    element: <AddProduct />
+  }, {
+    path: "/products/edit/:productID",
+    element: <UpdateProduct />
+  }, {
+    path: "/products",
+    element: <Products />
+  }, {
+    path: "/orders",
+    element: <Orders />
+  }, {
+    path: "/orders/:productID",
+    element: <Orders />
+  });
+}
+
+// if user is worker
+if (localStorage.getItem("userType") === "worker") {
+  children.push({
+    path: "/jobs",
+    element: <Jobs />
+  }, {
+    path: "/applications",
+    element: <Applications />
+  });
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,32 +96,7 @@ const router = createBrowserRouter([
       </RequireAuth>
     ),
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/", // yes, again
-        element: <Home />
-      },
-      {
-        path: "/about",
-        element: <About />
-      },
-      {
-        path: "contact/:contactId",
-        element: <Contact />
-      },
-      {
-        path: "/products",
-        element: <Products />
-      },
-      {
-        path: "/orders",
-        element: <Orders />
-      },
-      {
-        path: "/orders/:productID",
-        element: <Orders />
-      }
-    ]
+    children: children
   },
   {
     path: "/signup",

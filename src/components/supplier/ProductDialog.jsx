@@ -36,8 +36,8 @@ export default function ProductDialog({ product, handleOpen, size }) {
                             variant="gradient"
                             color="blue"
                             onClick={() => {
-                                handleOpen(null)
-                                navigate("/orders/" + product._id)
+                                handleOpen(null);
+                                navigate("/orders/" + product._id);
                             }}
                             className="mr-1"
                         >
@@ -46,7 +46,10 @@ export default function ProductDialog({ product, handleOpen, size }) {
                         <Button
                             variant="gradient"
                             color="purple"
-                            onClick={() => handleOpen(null)}
+                            onClick={() => {
+                                handleOpen(null);
+                                navigate("/products/edit/" + product._id);
+                            }}
                         >
                             Modify Product
                         </Button>
