@@ -43,7 +43,7 @@ export default function Sidebar({ children }) {
   if (userType == "farmer" || userType == "worker") {
     navigation.push(
       {
-        name: "Jobs",
+        name: "Add Jobs",
         href: "/jobs",
         svgd:
           "M5 13l4 4L19 7m-2-3a2 2 0 11-4 0 2 2 0 014 0z"
@@ -56,7 +56,16 @@ export default function Sidebar({ children }) {
       }
     );
   }
-
+if(userType=="farmer"){
+  navigation.push(
+    {
+      name:"Applied Job",
+      href:"/appliedJob",
+      
+    }
+  
+  )
+}
   navigation.push(
     {
       name: "Settings",

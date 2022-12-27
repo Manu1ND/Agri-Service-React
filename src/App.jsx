@@ -20,6 +20,11 @@ import Orders from "./pages/supplier/Orders";
 import Jobs from "./pages/worker/Jobs";
 import Applications from "./pages/worker/Applications";
 
+import AddJob from "./pages/farmer/AddJob";
+import JobOffered from "./pages/farmer/Job";
+import UpdateJob from "./pages/farmer/UpdateJob";
+import JobApplied from "./pages/farmer/JobApplied";
+
 import UpdateUser from "./pages/UpdateUser";
 
 import ErrorPage from "./pages/error-page";
@@ -91,6 +96,30 @@ if (localStorage.getItem("userType") === "worker") {
     path: "/applications/:jobID",
     element: <Applications />
   });
+}
+
+//if user is a farmer
+if (localStorage.getItem("userType") === "farmer") {
+  children.push({
+    path: "/jobs",
+    element: <AddJob/>
+  },{
+    path: "/applications",
+    element: <JobOffered/>
+  },
+   {
+    path: "/jobs/edit/:jobID",
+    element: <UpdateJob/>
+   },
+   {
+     path: "/appliedJob",
+     element:<JobApplied/>
+   },
+   {
+    path: "/appliedJob/:jobID",
+    element:<JobApplied/>
+  }
+  );
 }
 
 const router = createBrowserRouter([
