@@ -17,6 +17,7 @@ export default function ProductCard({ product, handleDialogOpen }) {
           className="h-full w-full"
         />
       </CardHeader>
+      
       <CardBody className="text-center">
         <Typography variant="h5" className="mb-2">
           {product.name}
@@ -25,6 +26,7 @@ export default function ProductCard({ product, handleDialogOpen }) {
           {product.description}
         </Typography>
       </CardBody>
+
       <CardFooter divider className="flex items-center justify-between py-3">
         <Typography variant="small">${product.costPerDay}/night</Typography>
         <Button color="blue" size="sm" onClick={() => handleDialogOpen("lg", product)}>

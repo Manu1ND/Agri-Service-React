@@ -12,18 +12,25 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 
+// supplier pages - products
 import AddProduct from "./pages/supplier/AddProduct";
 import UpdateProduct from "./pages/supplier/UpdateProduct";
-import Products from "./pages/supplier/Products";
-import Orders from "./pages/supplier/Orders";
+import SupplierProducts from "./pages/supplier/Products";
+import SupplierOrders from "./pages/supplier/Orders";
 
-import Jobs from "./pages/worker/Jobs";
-import Applications from "./pages/worker/Applications";
+// farmer pages - products
+//import Products from "./pages/farmer/Products";
+//import Orders from "./pages/farmer/Orders";
 
+// farmer pages - jobs
 import AddJob from "./pages/farmer/AddJob";
-import JobOffered from "./pages/farmer/Job";
 import UpdateJob from "./pages/farmer/UpdateJob";
-import JobApplied from "./pages/farmer/JobApplied";
+import FarmerJobs from "./pages/farmer/Jobs";
+import FarmerApplications from "./pages/farmer/Applications";
+
+// worker pages - jobs
+import WorkerJobs from "./pages/worker/Jobs";
+import WorkerApplications from "./pages/worker/Applications";
 
 import UpdateUser from "./pages/UpdateUser";
 
@@ -71,55 +78,52 @@ if (localStorage.getItem("userType") === "supplier") {
     element: <UpdateProduct />
   }, {
     path: "/products",
-    element: <Products />
+    element: <SupplierProducts />
   }, {
     path: "/orders",
-    element: <Orders />
+    element: <SupplierOrders />
   }, {
     path: "/orders/:productID",
-    element: <Orders />
-  });
-}
-
-// if user is worker
-if (localStorage.getItem("userType") === "worker") {
-  children.push({
-    path: "/jobs",
-    element: <Jobs />
-  }, {
-    path: "/jobs/jobCategory/:jobCategoryID",
-    element: <Jobs />
-  }, {
-    path: "/applications",
-    element: <Applications />
-  }, {
-    path: "/applications/:jobID",
-    element: <Applications />
+    element: <SupplierOrders />
   });
 }
 
 //if user is a farmer
 if (localStorage.getItem("userType") === "farmer") {
   children.push({
-    path: "/jobs",
-    element: <AddJob/>
-  },{
-    path: "/applications",
-    element: <JobOffered/>
-  },
-   {
+    path: "/jobs/add",
+    element: <AddJob />
+  }, {
     path: "/jobs/edit/:jobID",
-    element: <UpdateJob/>
-   },
-   {
-     path: "/appliedJob",
-     element:<JobApplied/>
-   },
-   {
-    path: "/appliedJob/:jobID",
-    element:<JobApplied/>
+    element: <UpdateJob />
+  }, {
+    path: "/jobs",
+    element: <FarmerJobs />
+  }, {
+    path: "/applications",
+    element: <FarmerApplications />
+  }, {
+    path: "/applications/:jobID",
+    element: <FarmerApplications />
   }
   );
+}
+
+// if user is worker
+if (localStorage.getItem("userType") === "worker") {
+  children.push({
+    path: "/jobs",
+    element: <WorkerJobs />
+  }, {
+    path: "/jobs/jobCategory/:jobCategoryID",
+    element: <WorkerJobs />
+  }, {
+    path: "/applications",
+    element: <WorkerApplications />
+  }, {
+    path: "/applications/:jobID",
+    element: <WorkerApplications />
+  });
 }
 
 const router = createBrowserRouter([

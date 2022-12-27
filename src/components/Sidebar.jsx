@@ -40,10 +40,21 @@ export default function Sidebar({ children }) {
       });
   }
 
+  if (userType == "farmer") {
+    navigation.push(
+      {
+        name: "Add Job",
+        href: "/jobs/add",
+        svgd:
+          "M12 6v6m0 0v6m0-6h6m-6 0H6"
+      }
+    )
+  }
+
   if (userType == "farmer" || userType == "worker") {
     navigation.push(
       {
-        name: "Add Jobs",
+        name: "Jobs",
         href: "/jobs",
         svgd:
           "M5 13l4 4L19 7m-2-3a2 2 0 11-4 0 2 2 0 014 0z"
@@ -56,16 +67,7 @@ export default function Sidebar({ children }) {
       }
     );
   }
-if(userType=="farmer"){
-  navigation.push(
-    {
-      name:"Applied Job",
-      href:"/appliedJob",
-      
-    }
-  
-  )
-}
+
   navigation.push(
     {
       name: "Settings",

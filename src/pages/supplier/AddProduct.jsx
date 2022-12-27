@@ -59,8 +59,8 @@ export default function AddProduct() {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-              <p className="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">product Details</h3>
+              <p className="mt-1 text-sm text-gray-600">Provide the details for your products.</p>
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
@@ -68,6 +68,7 @@ export default function AddProduct() {
               <div className="overflow-hidden shadow sm:rounded-md">
                 <div className="bg-white px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
+
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                         Name
@@ -159,7 +160,7 @@ export default function AddProduct() {
 
                     <br />
 
-                    <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                    {/* <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                       <label className="block text-sm font-medium text-gray-700">Photo</label>
                       <div className="mt-1 flex items-center">
                         <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
@@ -174,7 +175,8 @@ export default function AddProduct() {
                           Change
                         </button>
                       </div>
-                    </div>
+                    </div> */}
+                    
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">

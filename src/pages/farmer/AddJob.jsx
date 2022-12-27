@@ -1,57 +1,56 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
-function defaultJob(){
-    return{
-        
-jobCategoryID:'',
-farmerID:localStorage.getItem('userID'),
-description:'',
-wagePerDay:0,
-duration:0,
-quantity:0,
-//date:'',
-// isActive:true,
-    }
+// TODO - start date left
+function defaultJob() {
+  return {
+    jobCategoryID: '',
+    farmerID: localStorage.getItem('userID'),
+    description: '',
+    wagePerDay: 0,
+    duration: 0,
+    quantity: 0,
+    //date:'',
+  }
 }
 
-export default function AddJob(){
-    const [jobCategory,setJobCategory] =useState([]);
+export default function AddJob() {
+  // load job categories
+  const [jobCategory, setJobCategory] = useState([]);
 
-    useEffect(()=>{
-        axios.get(import.meta.env.VITE_SERVER_URL +'/api/job/category')
-        .then((response)=>{
-            setJobCategory(response.data);
-        })
-        .catch((error)=>{
-            console.log(error);
-        });
-    },[]);
+  useEffect(() => {
+    axios.get(import.meta.env.VITE_SERVER_URL + '/api/job/category')
+      .then((response) => {
+        setJobCategory(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-    const [job,setJob] =useState(defaultJob());
+  const [job, setJob] = useState(defaultJob());
 
-    const handleFormChange= (event) =>{
-        const {name,value} =  event.target;
-        setJob((prevJob)=>({...prevJob,[name]:value}));
-    }
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setJob((prevJob) => ({ ...prevJob, [name]: value }));
+  }
 
-    const handleFormSubmit =(event)=>{
-        event.preventDefault();
-        axios.post(import.meta.env.VITE_SERVER_URL +'/api/job',job)
-        .then((response)=>{
-            console.log(response);
-            setJob(defaultJob());
-        })
-        .catch((error)=>{
-            console.log(error);
-        });
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    axios.post(import.meta.env.VITE_SERVER_URL + '/api/job', job)
+      .then((response) => {
+        console.log(response);
+        setJob(defaultJob());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    }
+  }
 
-    return (
-        <>
-        <div className="hidden sm:block" aria-hidden="true">
+  return (
+    <>
+      <div className="hidden sm:block" aria-hidden="true">
         <div className="py-5">
           <div className="border-t border-gray-200" />
         </div>
@@ -61,8 +60,8 @@ export default function AddJob(){
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Job Offers</h3>
-              <p className="mt-1 text-sm text-gray-600">Add the job for which you need a worker</p>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">Job Details</h3>
+              <p className="mt-1 text-sm text-gray-600">Provide the details for your job.</p>
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
@@ -70,7 +69,6 @@ export default function AddJob(){
               <div className="overflow-hidden shadow sm:rounded-md">
                 <div className="bg-white px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
-                    
 
                     {/* JOb category dropdown */}
                     <div className="col-span-6 sm:col-span-3">
@@ -165,9 +163,23 @@ export default function AddJob(){
 
                     <br />
 
-                    
+                    {/* <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700">Photo</label>
+                      <div className="mt-1 flex items-center">
+                        <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
+                          <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                          </svg>
+                        </span>
+                        <button
+                          type="button"
+                          className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                          Change
+                        </button>
+                      </div>
+                    </div> */}
 
-                    
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
@@ -183,7 +195,6 @@ export default function AddJob(){
           </div>
         </div>
       </div>
-        
-        </>
-    )
+    </>
+  )
 }

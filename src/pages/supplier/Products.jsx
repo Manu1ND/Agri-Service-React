@@ -1,14 +1,13 @@
 import ProductCard from "../../components/supplier/ProductCard";
 import ProductDialog from "../../components/supplier/ProductDialog";
 
-// fetch products from database using axios and hook
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Products() {
   // save products in state
   const [products, setProducts] = useState([]);
-  
+
   // state for dialog
   const [product, setProduct] = useState(null);
   const [dialogSize, setDialogSize] = useState(null);
@@ -45,6 +44,7 @@ export default function Products() {
             <ProductCard key={product._id} product={product} handleDialogOpen={handleDialogOpen} />
           ))}
         </div>
+        
         <ProductDialog product={product} handleDialogOpen={handleDialogOpen} size={dialogSize} />
       </div>
     </div>

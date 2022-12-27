@@ -1,5 +1,5 @@
-import OrderRow from "../../components/supplier/OrderRow.jsx";
-import OrderDialog from "../../components/supplier/OrderDialog.jsx";
+import OrderRow from "../../components/supplier/OrderRow";
+import OrderDialog from "../../components/supplier/OrderDialog";
 
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
@@ -11,9 +11,9 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
 
   // state for select options
-  const [productOptionsLoaded, setproductOptionsLoaded] = useState(false);
+  const [productOptionsLoaded, setProductOptionsLoaded] = useState(false);
   const [productOptions, setProductOptions] = useState([]);
-  const [productOption, setProductOption] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   // state for dialog
   const [order, setOrder] = useState(null);
@@ -22,7 +22,7 @@ export default function Orders() {
   const { productID } = useParams();
 
   const handleSelectChange = option => {
-    setProductOption(option);
+    setSelectedProduct(option);
 
     if (option && option.value) {
       axios
@@ -62,42 +62,43 @@ export default function Orders() {
         console.log(response);
         handleDialogOpen(null);
         // reload orders
-        handleSelectChange(productOption);
+        handleSelectChange(selectedProduct);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  // load products into select options
+  // load products for select options
   useEffect(() => {
     axios
       .get(import.meta.env.VITE_SERVER_URL + '/api/product/supplier/' + localStorage.getItem('userID'))
       .then((res) => {
         // add first option to select options
         setProductOptions([{ label: "All Products", value: null }]);
-        // save products in select options
+
+        // add products to select options
         res.data.forEach((product) => {
-          setProductOptions((prev) => [
-            ...prev,
+          setProductOptions((prevOptions) => [
+            ...prevOptions,
             { label: product.name, value: product._id }
           ]);
           if (productID && product._id == productID) {
-            setProductOption({ label: product.name, value: product._id });
+            setSelectedProduct({ label: product.name, value: product._id });
           }
         });
-        setproductOptionsLoaded(true);
+        setProductOptionsLoaded(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // fetch orders based on select menu value only after select options are loaded
+  // fetch orders based on select menu value only after options are loaded
   useEffect(() => {
     // load orders based on select menu value
     if (productOptionsLoaded) {
-      handleSelectChange(productOption);
+      handleSelectChange(selectedProduct);
     }
   }, [productOptionsLoaded]);
 
@@ -111,7 +112,7 @@ export default function Orders() {
         <Select
           placeholder="Search for a product..."
           primaryColor={"orange"}
-          value={productOption}
+          value={selectedProduct}
           onChange={handleSelectChange}
           options={productOptions}
           isSearchable
