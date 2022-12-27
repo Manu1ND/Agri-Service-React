@@ -40,6 +40,9 @@ function RequireAuth({ children }) {
 // children routes based on user role
 var children = [];
 children.push({
+  path: "/*", // page not found
+  element: <ErrorPage />
+}, {
   path: "/", // yes, again
   element: <Home />
 }, {
@@ -79,7 +82,13 @@ if (localStorage.getItem("userType") === "worker") {
     path: "/jobs",
     element: <Jobs />
   }, {
+    path: "/jobs/jobCategory/:jobCategoryID",
+    element: <Jobs />
+  }, {
     path: "/applications",
+    element: <Applications />
+  }, {
+    path: "/applications/:jobID",
     element: <Applications />
   });
 }

@@ -7,8 +7,8 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 
-export default function OrderDialog({ order, handleDialogOpen, handleCancelOrder, size }) {
-  if (order) {
+export default function ApplicationDialog({ application, handleDialogOpen, handleCancelApplication, size }) {
+  if(application) {
     return (
       <Fragment>
         <Dialog
@@ -16,23 +16,23 @@ export default function OrderDialog({ order, handleDialogOpen, handleCancelOrder
           size={"lg"}
           handler={handleDialogOpen}
         >
-          <DialogHeader>{order.product.name}</DialogHeader>
+          <DialogHeader>{application.job.jobCategory.name}</DialogHeader>
           <DialogBody divider>
-            {order.product.description}
+            {application.job.description}
 
-            {/* if product status is accepted then show cancel button */}
-            {order.status === "accepted" && (
+            {/* if application status is pending or accepted then show cancel button */}
+            {(application.status === "pending" || application.status === "accepted") && (
               <Button
                 variant="gradient"
                 color="red"
                 onClick={() => {
                   handleDialogOpen(null);
-                  handleCancelOrder();
+                  handleCancelApplication();
                 }
                 }
                 className="mr-1"
               >
-                <span>Cancel Order</span>
+                <span>Cancel Application</span>
               </Button>
             )}
           </DialogBody>
@@ -43,12 +43,12 @@ export default function OrderDialog({ order, handleDialogOpen, handleCancelOrder
               onClick={() => handleDialogOpen(null)}
               className="mr-1"
             >
-              <span>Close</span>
+              Close
             </Button>
           </DialogFooter>
         </Dialog>
-      </Fragment >
-    )
+      </Fragment>
+    );
   } else {
     return null;
   }

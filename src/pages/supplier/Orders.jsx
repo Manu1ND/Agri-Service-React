@@ -6,23 +6,12 @@ import { useParams } from 'react-router-dom';
 import axios from "axios";
 import Select from "react-tailwindcss-select";
 
-function loadOrders(setOrders) {
-  axios
-    .get(import.meta.env.VITE_SERVER_URL + '/api/productOrder/supplier/' + localStorage.getItem('userID'))
-    .then((res) => {
-      setOrders(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
 export default function Orders() {
   // save orders in state
   const [orders, setOrders] = useState([]);
 
-  // state for select
-  const [productsOptionsLoaded, setProductsOptionsLoaded] = useState(false);
+  // state for select options
+  const [productOptionsLoaded, setproductOptionsLoaded] = useState(false);
   const [productOptions, setProductOptions] = useState([]);
   const [productOption, setProductOption] = useState(null);
 
@@ -45,15 +34,39 @@ export default function Orders() {
           console.log(err);
         });
     } else {
-      loadOrders(setOrders);
+      axios
+        .get(import.meta.env.VITE_SERVER_URL + '/api/productOrder/supplier/' + localStorage.getItem('userID'))
+        .then((res) => {
+          setOrders(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  };
+  }
 
   const handleDialogOpen = (size, product) => {
     setDialogSize(size);
     if (product) {
       setOrder(product);
     }
+  }
+
+  const handleCancelOrder = () => {
+    axios.put(
+      import.meta.env.VITE_SERVER_URL +
+      "/api/productOrder/" +
+      order._id, { status: "cancelledBySupplier" }
+    )
+      .then((response) => {
+        console.log(response);
+        handleDialogOpen(null);
+        // reload orders
+        handleSelectChange(productOption);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   // load products into select options
@@ -65,12 +78,15 @@ export default function Orders() {
         setProductOptions([{ label: "All Products", value: null }]);
         // save products in select options
         res.data.forEach((product) => {
-          setProductOptions((prev) => [...prev, { label: product.name, value: product._id }]);
+          setProductOptions((prev) => [
+            ...prev,
+            { label: product.name, value: product._id }
+          ]);
           if (productID && product._id == productID) {
             setProductOption({ label: product.name, value: product._id });
           }
         });
-        setProductsOptionsLoaded(true);
+        setproductOptionsLoaded(true);
       })
       .catch((err) => {
         console.log(err);
@@ -80,10 +96,10 @@ export default function Orders() {
   // fetch orders based on select menu value only after select options are loaded
   useEffect(() => {
     // load orders based on select menu value
-    if (productsOptionsLoaded) {
+    if (productOptionsLoaded) {
       handleSelectChange(productOption);
     }
-  }, [productsOptionsLoaded]);
+  }, [productOptionsLoaded]);
 
   return (
     <div className="bg-white">
@@ -123,11 +139,15 @@ export default function Orders() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {orders.map((order) => (
-              <OrderRow key={order._id} order={order} handleDialogOpen={handleDialogOpen} size={dialogSize} />
+              <OrderRow key={order._id} order={order} handleDialogOpen={handleDialogOpen} />
             ))}
           </tbody>
-          <OrderDialog order={order} handleDialogOpen={handleDialogOpen} size={dialogSize} />
         </table>
+
+        {/* Dialog */}
+        {order && (
+          <OrderDialog order={order} handleDialogOpen={handleDialogOpen} handleCancelOrder={handleCancelOrder} size={dialogSize} />
+        )}
       </div>
     </div>
   );

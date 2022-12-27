@@ -1,14 +1,8 @@
-// row for order table
-//
-// // create table dashboard tailwind material ui
-//
-// // fetch orders from database using axios and hook
-
 function joinClasses(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function OrderRow({ order, handleDialogOpen, size }) {
+export default function OrderRow({ order, handleDialogOpen }) {
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap">

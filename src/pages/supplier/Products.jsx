@@ -8,10 +8,12 @@ import axios from "axios";
 export default function Products() {
   // save products in state
   const [products, setProducts] = useState([]);
+  
+  // state for dialog
   const [product, setProduct] = useState(null);
   const [dialogSize, setDialogSize] = useState(null);
 
-  const handleOpen = (size, product) => {
+  const handleDialogOpen = (size, product) => {
     setDialogSize(size);
 
     if (product) {
@@ -40,10 +42,10 @@ export default function Products() {
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
-            <ProductCard key={product._id} product={product} handleOpen={handleOpen} />
+            <ProductCard key={product._id} product={product} handleDialogOpen={handleDialogOpen} />
           ))}
         </div>
-        <ProductDialog product={product} handleOpen={handleOpen} size={dialogSize} />
+        <ProductDialog product={product} handleDialogOpen={handleDialogOpen} size={dialogSize} />
       </div>
     </div>
   );
