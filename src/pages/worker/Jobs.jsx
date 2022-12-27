@@ -79,6 +79,7 @@ export default function Jobs() {
       .then((res) => {
         // add first option to select options
         setJobCategoryOptions([{ label: "All Categories", value: null }]);
+
         // save job categories in select options
         res.data.forEach((jobCategory) => {
           setJobCategoryOptions((prev) => [
@@ -113,7 +114,7 @@ export default function Jobs() {
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
           <div className="col-span-1">
             <Select
-              placeholder="Select Job Category"
+              placeholder="Select Job Category..."
               primaryColor={"orange"}
               value={jobCategoryOption}
               onChange={handleSelectChange}
@@ -121,6 +122,7 @@ export default function Jobs() {
               isSearchable
             />
           </div>
+
           {jobs.map((job) => (
             <JobCard key={job._id} job={job} handleDialogOpen={handleDialogOpen} />
           ))}
@@ -128,7 +130,7 @@ export default function Jobs() {
 
         {/* Dialog */}
         {job && (
-          <JobDialog job={job} handleDialogOpen={handleDialogOpen} handleApplyJob={handleApplyJob}  size={dialogSize} />
+          <JobDialog job={job} handleDialogOpen={handleDialogOpen} handleApplyJob={handleApplyJob} size={dialogSize} />
         )}
       </div>
     </div>

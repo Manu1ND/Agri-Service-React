@@ -32,6 +32,7 @@ export default function JobDialog({ job, handleDialogOpen, handleApplyJob, size 
             >
               <span>Close</span>
             </Button>
+
             {/* if not applied then show button */}
             {!job.applied && (
               <Button
@@ -46,6 +47,7 @@ export default function JobDialog({ job, handleDialogOpen, handleApplyJob, size 
                 Apply for Job
               </Button>
             )}
+            
             {/* if applied then show button */}
             {job.applied && (
               <Button

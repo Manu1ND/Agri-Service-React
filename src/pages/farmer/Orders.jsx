@@ -1,24 +1,24 @@
-import ApplicationRow from "../../components/worker/ApplicationRow";
-import ApplicationDialog from "../../components/worker/ApplicationDialog";
+import OrderRow from "../../components/farmer/OrderRow";
+import OrderDialog from "../../components/farmer/OrderDialog";
 
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 
-export default function Applications() {
-  // save applications in state
-  const [applications, setApplications] = useState([]);
+export default function Orders() {
+  // save orders in state
+  const [orders, setOrders] = useState([]);
 
   // state for dialog
-  const [application, setApplication] = useState(null);
+  const [order, setOrder] = useState(null);
   const [dialogSize, setDialogSize] = useState(null);
 
-  const { jobID } = useParams();
+  const { productID } = useParams();
 
-  function loadApplicationsByWorker() {
-    axios.get(import.meta.env.VITE_SERVER_URL + "/api/jobOffer/worker/" + localStorage.getItem("userID"))
+  function loadOrdersByFarmer() {
+    axios.get(import.meta.env.VITE_SERVER_URL + "/api/productOrder/farmer/" + localStorage.getItem("userID"))
       .then((res) => {
-        setApplications(res.data);
+        setOrders(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -26,44 +26,38 @@ export default function Applications() {
   }
 
   useEffect(() => {
-    if (jobID) {
-      axios.get(import.meta.env.VITE_SERVER_URL + "/api/jobOffer/job/" + jobID)
+    if (productID) {
+      axios.get(import.meta.env.VITE_SERVER_URL + "/api/productOrder/product/" + productID)
         .then((res) => {
           console.log(res);
-          let jobOffers = res.data.jobOffers;
-          let job = res.data.job;
-          // add job to each jobOffer
-          jobOffers.forEach((jobOffer) => {
-            jobOffer.job = job;
-          });
-          setApplications(jobOffers);
+          setOrders(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      loadApplicationsByWorker();
+      loadOrdersByFarmer();
     }
-  }, [jobID]);
+  }, [productID]);
 
-  const handleDialogOpen = (size, application) => {
+  const handleDialogOpen = (size, product) => {
     setDialogSize(size);
-    if (application) {
-      setApplication(application);
+    if (product) {
+      setOrder(product);
     }
   }
 
-  const handleCancelApplication = () => {
+  const handleCancelOrder = () => {
     axios.put(
       import.meta.env.VITE_SERVER_URL +
-      "/api/jobOffer/" +
-      application._id, { status: "cancelledByWorker" }
+      "/api/productOrder/" +
+      order._id, { status: "cancelledByFarmer" }
     )
       .then((response) => {
         console.log(response);
         handleDialogOpen(null);
-        // reload applications
-        loadApplicationsByWorker();
+        // reload orders
+        loadOrdersByFarmer();
       })
       .catch((error) => {
         console.log(error);
@@ -74,34 +68,40 @@ export default function Applications() {
     <div className="bg-white">
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-          Jobs you applied for
+          Your Orders
         </h2>
 
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Job
+                Product
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Wage per Day
+                Quantity
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Price
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
+              </th>
+              <th scope="col" className="relative px-6 py-3">
+                <span className="sr-only">Edit</span>
               </th>
             </tr>
           </thead>
           
           <tbody className="bg-white divide-y divide-gray-200">
-            {applications.map((application) => (
-              <ApplicationRow key={application._id} application={application} handleDialogOpen={handleDialogOpen} />
+            {orders.map((order) => (
+              <OrderRow key={order._id} order={order} handleDialogOpen={handleDialogOpen} />
             ))}
           </tbody>
         </table>
 
         {/* Dialog */}
-        {application && (
-          <ApplicationDialog application={application} handleDialogOpen={handleDialogOpen} handleCancelApplication={handleCancelApplication} size={dialogSize} />
+        {order && (
+          <OrderDialog order={order} handleDialogOpen={handleDialogOpen} handleCancelOrder={handleCancelOrder} size={dialogSize} />
         )}
       </div>
     </div>

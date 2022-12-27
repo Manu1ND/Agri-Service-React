@@ -19,8 +19,8 @@ import SupplierProducts from "./pages/supplier/Products";
 import SupplierOrders from "./pages/supplier/Orders";
 
 // farmer pages - products
-//import Products from "./pages/farmer/Products";
-//import Orders from "./pages/farmer/Orders";
+import FarmerProducts from "./pages/farmer/Products";
+import FarmerOrders from "./pages/farmer/Orders";
 
 // farmer pages - jobs
 import AddJob from "./pages/farmer/AddJob";
@@ -91,6 +91,18 @@ if (localStorage.getItem("userType") === "supplier") {
 //if user is a farmer
 if (localStorage.getItem("userType") === "farmer") {
   children.push({
+    path: "/products",
+    element: <FarmerProducts />
+  }, {
+    path: "/products/productCategory/:productCategoryID",
+    element: <FarmerProducts />
+  }, {
+    path: "/orders",
+    element: <FarmerOrders />
+  }, {
+    path: "/orders/:productID",
+    element: <FarmerOrders />
+  }, {
     path: "/jobs/add",
     element: <AddJob />
   }, {
