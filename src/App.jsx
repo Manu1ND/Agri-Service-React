@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider, useLocation, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 import SignupPage from "./pages/authentication/Signup";
@@ -39,8 +40,25 @@ import ErrorPage from "./pages/error-page";
 import { Outlet } from "react-router-dom";
 
 function RequireAuth({ children }) {
-  let userID = localStorage.getItem("userID");
+  //let userID = localStorage.getItem("userID");
   let location = useLocation();
+  
+  // state to sync with localstorage
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
+
+  const onStorageUpdate = (e) => {
+    if (e.key === "userID") {
+      setUserID(e.newValue);
+    }
+  }
+
+  // listen to localstorage changes
+  useEffect(() => {
+    window.addEventListener("storage", onStorageUpdate);
+    return () => {
+      window.removeEventListener("storage", onStorageUpdate);
+    }
+  }, []);
 
   if (!userID) {
     return <Navigate to="/login" state={{ from: location }} replace />;
@@ -49,124 +67,142 @@ function RequireAuth({ children }) {
   return children;
 }
 
-// children routes based on user role
-var children = [];
-children.push({
-  path: "/*", // page not found
-  element: <ErrorPage />
-}, {
-  path: "/", // yes, again
-  element: <Home />
-}, {
-  path: "/about",
-  element: <About />
-}, {
-  path: "contact/:contactId",
-  element: <Contact />
-}, {
-  path: "/settings",
-  element: <UpdateUser />
-});
-
-// if user is supplier
-if (localStorage.getItem("userType") === "supplier") {
-  children.push({
-    path: "/products/add",
-    element: <AddProduct />
-  }, {
-    path: "/products/edit/:productID",
-    element: <UpdateProduct />
-  }, {
-    path: "/products",
-    element: <SupplierProducts />
-  }, {
-    path: "/orders",
-    element: <SupplierOrders />
-  }, {
-    path: "/orders/:productID",
-    element: <SupplierOrders />
-  });
-}
-
-//if user is a farmer
-if (localStorage.getItem("userType") === "farmer") {
-  children.push({
-    path: "/products",
-    element: <FarmerProducts />
-  }, {
-    path: "/products/productCategory/:productCategoryID",
-    element: <FarmerProducts />
-  }, {
-    path: "/orders",
-    element: <FarmerOrders />
-  }, {
-    path: "/orders/:productID",
-    element: <FarmerOrders />
-  }, {
-    path: "/jobs/add",
-    element: <AddJob />
-  }, {
-    path: "/jobs/edit/:jobID",
-    element: <UpdateJob />
-  }, {
-    path: "/jobs",
-    element: <FarmerJobs />
-  }, {
-    path: "/applications",
-    element: <FarmerApplications />
-  }, {
-    path: "/applications/:jobID",
-    element: <FarmerApplications />
-  }
-  );
-}
-
-// if user is worker
-if (localStorage.getItem("userType") === "worker") {
-  children.push({
-    path: "/jobs",
-    element: <WorkerJobs />
-  }, {
-    path: "/jobs/jobCategory/:jobCategoryID",
-    element: <WorkerJobs />
-  }, {
-    path: "/applications",
-    element: <WorkerApplications />
-  }, {
-    path: "/applications/:jobID",
-    element: <WorkerApplications />
-  });
-}
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <RequireAuth>
-        <Navbar />
-        <Sidebar>
-          <Outlet />
-        </Sidebar>
-      </RequireAuth>
-    ),
-    errorElement: <ErrorPage />,
-    children: children
-  },
-  {
-    path: "/signup",
-    element: <SignupPage />
-  },
-  {
-    path: "/login",
-    element: <LoginPage />
-  },
-  {
-    path: "/logout",
-    element: <LogoutPage />
-  }
-]);
 
 function App() {
+  // state to sync with localstorage
+  const [userType, setUserType] = useState(localStorage.getItem("userType"));
+
+  const onStorageUpdate = (e) => {
+    if (e.key === "userType") {
+      setUserType(e.newValue);
+    }
+  }
+
+  // listen to localstorage changes
+  useEffect(() => {
+    window.addEventListener("storage", onStorageUpdate);
+    return () => {
+      window.removeEventListener("storage", onStorageUpdate);
+    }
+  }, []);
+  
+  // children routes based on user role
+  var children = [];
+  children.push({
+    path: "/*", // page not found
+    element: <ErrorPage />
+  }, {
+    path: "/", // yes, again
+    element: <Home />
+  }, {
+    path: "/about",
+    element: <About />
+  }, {
+    path: "contact/:contactId",
+    element: <Contact />
+  }, {
+    path: "/settings",
+    element: <UpdateUser />
+  });
+  
+  // if user is supplier
+  if (userType === "supplier") {
+    children.push({
+      path: "/products/add",
+      element: <AddProduct />
+    }, {
+      path: "/products/edit/:productID",
+      element: <UpdateProduct />
+    }, {
+      path: "/products",
+      element: <SupplierProducts />
+    }, {
+      path: "/orders",
+      element: <SupplierOrders />
+    }, {
+      path: "/orders/:productID",
+      element: <SupplierOrders />
+    });
+  }
+  
+  //if user is a farmer
+  if (userType === "farmer") {
+    children.push({
+      path: "/products",
+      element: <FarmerProducts />
+    }, {
+      path: "/products/productCategory/:productCategoryID",
+      element: <FarmerProducts />
+    }, {
+      path: "/orders",
+      element: <FarmerOrders />
+    }, {
+      path: "/orders/:productID",
+      element: <FarmerOrders />
+    }, {
+      path: "/jobs/add",
+      element: <AddJob />
+    }, {
+      path: "/jobs/edit/:jobID",
+      element: <UpdateJob />
+    }, {
+      path: "/jobs",
+      element: <FarmerJobs />
+    }, {
+      path: "/applications",
+      element: <FarmerApplications />
+    }, {
+      path: "/applications/:jobID",
+      element: <FarmerApplications />
+    }
+    );
+  }
+  
+  // if user is worker
+  if (userType === "worker") {
+    children.push({
+      path: "/jobs",
+      element: <WorkerJobs />
+    }, {
+      path: "/jobs/jobCategory/:jobCategoryID",
+      element: <WorkerJobs />
+    }, {
+      path: "/applications",
+      element: <WorkerApplications />
+    }, {
+      path: "/applications/:jobID",
+      element: <WorkerApplications />
+    });
+  }
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <RequireAuth>
+          <Navbar />
+          <Sidebar>
+            <Outlet />
+          </Sidebar>
+        </RequireAuth>
+      ),
+      errorElement: <ErrorPage />,
+      children: children
+    },
+    {
+      path: "/signup",
+      element: <SignupPage />
+    },
+    {
+      path: "/login",
+      element: <LoginPage />
+    },
+    {
+      path: "/logout",
+      element: <LogoutPage />
+    }
+  ]);
+
   return <RouterProvider router={router} />;
 }
 

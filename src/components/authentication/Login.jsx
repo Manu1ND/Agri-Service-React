@@ -38,6 +38,8 @@ export default function Login() {
         localStorage.setItem('userType', res.data.userType);
         localStorage.setItem('userID', res.data._id);
         navigate(from, { replace: true });
+        // TODO - remove this line
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);
