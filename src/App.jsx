@@ -49,6 +49,10 @@ function RequireAuth({ children }) {
   const onStorageUpdate = (e) => {
     if (e.key === "userID") {
       setUserID(e.newValue);
+      if (e.newValue == null) {
+        // TODO - remove this
+        window.location.reload();
+      }
     }
   }
 

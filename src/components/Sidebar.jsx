@@ -81,6 +81,28 @@ if(userType=="farmer"){
     }
   );
 
+  KoreSDK.chatConfig.botOptions.userIdentity = localStorage.getItem("userID");
+  KoreSDK.chatConfig.botOptions.loadHistory = true;
+  KoreSDK.chatConfig.loadHistory = true;
+  KoreSDK.chatConfig.botOptions.botInfo.customData = {
+    user: {
+      type: localStorage.getItem("userType"),
+      id: localStorage.getItem("userID")
+    },
+    client: {
+      type: "react",
+      url: window.location.href
+    }
+  }
+
+  KoreSDK.widgetsConfig.botOptions.JWTUrl = "https://agri-express-server.manu1nd.repl.co/testjwt";
+  KoreSDK.widgetsConfig.botOptions.botInfo = { name: "Agri_Service", "_id": "st-82322b8f-cdd5-52a5-bd21-b08456091a8e" };
+  KoreSDK.widgetsConfig.botOptions.clientId = "cs-61867d30-0ea4-56f2-92c6-d48465210e7c";
+  KoreSDK.widgetsConfig.botOptions.clientSecret = "zp0Iu6SZZb/R4Xh0bwtc+k/5NSYXNc4pru1lztx+/Pk=";
+  KoreSDK.widgetsConfig.botOptions.userIdentity = localStorage.getItem("userID");
+
+  KoreSDK.show(KoreSDK.chatConfig);
+
   return (
     <div className="flex">
       <div
