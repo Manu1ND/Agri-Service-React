@@ -93,7 +93,7 @@ export default function Sidebar({ children }) {
     },
     client: {
       type: "react",
-      url: window.location.href
+      url: window.location.origin + "/"
     }
   }
 
