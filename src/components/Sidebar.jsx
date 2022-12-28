@@ -40,10 +40,21 @@ export default function Sidebar({ children }) {
       });
   }
 
+  if (userType == "farmer") {
+    navigation.push(
+      {
+        name: "Add Job",
+        href: "/jobs/add",
+        svgd:
+          "M12 6v6m0 0v6m0-6h6m-6 0H6"
+      }
+    )
+  }
+
   if (userType == "farmer" || userType == "worker") {
     navigation.push(
       {
-        name: "Add Jobs",
+        name: "Jobs",
         href: "/jobs",
         svgd:
           "M5 13l4 4L19 7m-2-3a2 2 0 11-4 0 2 2 0 014 0z"
@@ -56,16 +67,7 @@ export default function Sidebar({ children }) {
       }
     );
   }
-if(userType=="farmer"){
-  navigation.push(
-    {
-      name:"Applied Job",
-      href:"/appliedJob",
-      
-    }
   
-  )
-}
   navigation.push(
     {
       name: "Settings",
@@ -133,9 +135,9 @@ if(userType=="farmer"){
             <ul className="pt-2 pb-4 space-y-1 text-sm">
               {navigation.map((item) => (
                 <li key={item.name} as="a" className="rounded-sm hover:bg-violet-600 ">
-                  <Link className="rounded-sm hover:bg-violet-600 "
+                  <Link
                     to={item.href}
-                    className="flex items-center p-2 space-x-3 rounded-md"
+                    className="rounded-sm hover:bg-violet-600 flex items-center p-2 space-x-3 rounded-md"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
