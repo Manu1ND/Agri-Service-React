@@ -115,8 +115,7 @@ export default function Products() {
           Products available for you
         </h2>
 
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          <div className="col-span-1">
+          <div className="col-span-1 flex items-center ">
             <Select
               placeholder="Select a product category..."
               primaryColor={"orange"}
@@ -126,11 +125,12 @@ export default function Products() {
               isSearchable
             />
           </div>
+        <div className="mt-20  mr-10 grid grid-cols-1 gap-y-10 gap-x-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 ">
 
           {products.map((product) => (
             <ProductCard key={product._id} product={product} handleDialogOpen={handleDialogOpen} />
           ))}
-        </div>
+          </div>
 
         {/* Dialog */}
         <ProductDialog product={product} handleDialogOpen={handleDialogOpen} handleBuyProduct={handleBuyProduct} size={dialogSize} />

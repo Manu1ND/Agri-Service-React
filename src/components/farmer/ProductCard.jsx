@@ -9,12 +9,13 @@ import {
 
 export default function ProductCard({ product, handleDialogOpen }) {
   return (
-    <Card className="w-72">
-      <CardHeader color="deep-orange" className="relative h-56">
+    <Card className="w-72 py-100px">
+      <CardHeader color="teal" className=" bg-slate-800 relative h-56 border-t-2  border-r-4 border-teal-700" >
         <img
           src={product.imageURL}
           alt={product.name}
           className="h-full w-full"
+          
         />
       </CardHeader>
       
@@ -29,7 +30,7 @@ export default function ProductCard({ product, handleDialogOpen }) {
 
       <CardFooter divider className="flex items-center justify-between py-3">
         <Typography variant="small">${product.costPerDay}/night</Typography>
-        <Button color="blue" size="sm" onClick={() => handleDialogOpen("lg", product)}>
+        <Button color="teal" size="sm" onClick={() => handleDialogOpen("lg", product)}>
           View
         </Button>
         <Typography variant="small" color="gray" className="flex gap-1">
