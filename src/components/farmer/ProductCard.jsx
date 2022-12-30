@@ -10,7 +10,7 @@ import {
 export default function ProductCard({ product, handleDialogOpen }) {
   return (
     <Card className="w-72 py-100px">
-      <CardHeader color="teal" className=" bg-slate-800 relative h-56 border-t-2  border-r-4 border-teal-700" >
+      <CardHeader color="teal" className="bg-slate-800 relative h-56 border-t-2 border-r-4 border-teal-700" >
         <img
           src={product.imageURL}
           alt={product.name}

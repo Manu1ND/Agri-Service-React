@@ -66,24 +66,24 @@ export default function Orders() {
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+      <div className="mx-auto max-w-2xl py-8 px-4 sm:py-14 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 className="text-2xl font-bold pb-10 tracking-tight text-gray-900">
           Your Orders
         </h2>
 
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+        <table className="min-w-full divide-y divide-gray-200 border-2 border-orange-200 ">
+          <thead className="bg-gray-50 ">
+            <tr className="bg-orange-200 ">
+              <th scope="col" className="px-6 py-3 text-left text-base font-medium text-gray-500 uppercase tracking-wider">
                 Product
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-base  font-medium text-gray-500 uppercase tracking-wider">
                 Quantity
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-base  font-medium text-gray-500 uppercase tracking-wider">
                 Price
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-3 text-left text-base font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
               <th scope="col" className="relative px-6 py-3">

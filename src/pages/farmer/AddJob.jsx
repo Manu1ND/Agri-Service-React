@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import work from '../../image/working.jpg'
 // TODO - start date left
 function defaultJob() {
   return {
@@ -60,8 +60,9 @@ export default function AddJob() {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Job Details</h3>
-              <p className="mt-1 text-sm text-gray-600">Provide the details for your job.</p>
+              <h3 className="text-lg font-medium leading-6 text-gray-900 pl-10">Job Details</h3>
+              <p className="mt-1 text-sm text-gray-600 pl-10">Provide the details for your job.</p>
+              <img className="pt-10 pl-5" src={work}/>
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
@@ -105,7 +106,7 @@ export default function AddJob() {
                           name="description"
                           rows={3}
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                          placeholder="job@example.com"
+                          placeholder="Describe the job in 250 words..."
                           onChange={handleFormChange}
                           value={job.description}
                         />
